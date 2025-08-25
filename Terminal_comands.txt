@@ -1,0 +1,20 @@
+#To run front-end
+streamlit run src/streamlit_app.py
+#===================
+
+#To run back-end
+uvicorn src.api.endpoints:app --reload --host 127.0.0.1 --port 8000
+#=================
+
+#To activate conda:
+conda activate doc-prep-clean
+
+#To Deactivate:
+conda deactivate
+#=================
+
+
+minIO login:
+Username: minioadmin
+Password: minioadmin
+#=================

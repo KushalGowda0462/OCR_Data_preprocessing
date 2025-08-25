@@ -1,0 +1,20 @@
+# Core dependencies
+numpy==1.21.5
+Pillow==9.0.1
+opencv-python-headless==4.5.5.64
+
+# Web & API
+fastapi==0.75.2
+uvicorn==0.17.6
+python-multipart==0.0.5
+requests==2.28.1
+
+# Storage & Cache
+redis==4.3.4
+boto3==1.24.0
+
+# Monitoring (optional - we can remove if problematic)
+prometheus-client==0.14.1
+
+# Remove healthcheck entirely - we'll implement our own
+streamlit
