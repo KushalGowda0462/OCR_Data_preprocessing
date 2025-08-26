@@ -18,3 +18,14 @@ minIO login:
 Username: minioadmin
 Password: minioadmin
 #=================
+
+#===========================================
+#Original OpenCV:
+python tools/step5_segment.py -i samples/
+
+#Rule-based:
+python tools/step5_rule_based.py -i samples/
+
+#Hybrid (combined):
+python tools/step5_hybrid.py -i samples/
+#===========================================

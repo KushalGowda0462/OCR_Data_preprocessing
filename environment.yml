@@ -6,3 +6,8 @@ dependencies:
   - python=3.9
   - opencv=4.5.5  # This is important for Windows
   - pip
+  # environment.yml (add under pip:)
+  - mmengine
+  - mmcv-lite
+  - mmocr
+  - kraken

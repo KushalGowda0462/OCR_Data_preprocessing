@@ -1,7 +1,7 @@
 # src/api/endpoints.py
-import numpy as np
+import numpy as np, cv2
 import cv2
-from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
+from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks, APIRouter, Query
 from fastapi.responses import JSONResponse, Response
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 import redis
@@ -11,7 +11,8 @@ import logging
 from typing import Optional
 import os
 from PIL import Image
-
+from ..segmentation import lines_mmocr, lines_kraken
+from ..preprocessing.core import DocumentPreprocessor, preprocess_safe
 from src.preprocessing.core import DocumentPreprocessor
 from src.preprocessing.models import PreprocessingConfig, ProcessingResult, PreprocessingError
 from src.utils.storage import StorageManager
@@ -261,7 +262,23 @@ async def process_image_task(document_id: str, image_data: bytes):
             redis_client.setex(f"preprocessing:{document_id}", 3600, json.dumps(error_result))
             redis_client.lpush("preprocessing:errors", json.dumps(error_result))
 
+@router.post("/segment")
+async def segment(
+    file: UploadFile = File(...),
+    engine: str = Query("mmocr", enum=["mmocr", "kraken"])
+):
+    data = await file.read()
+    arr = np.frombuffer(data, np.uint8)
+    bgr = cv2.imdecode(arr, cv2.IMREAD_COLOR)
 
+    binv = preprocess_safe(bgr)  # safe baseline
+    if engine == "mmocr":
+        lines = lines_mmocr.detect_lines(bgr)   # most detectors expect BGR/RGB; use original
+    else:
+        lines = lines_kraken.detect_lines(bgr)
+
+    # return metadata only; client can crop locally if needed
+    return {"ok": True, "n_lines": len(lines), "lines": lines}
 
 
 
