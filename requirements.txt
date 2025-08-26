@@ -18,3 +18,15 @@ prometheus-client==0.14.1
 
 # Remove healthcheck entirely - we'll implement our own
 streamlit
+
+mmengine
+mmcv-lite
+mmocr
+kraken
+
+python-doctr[torch]
+shapely==2.0.1
+opencv-python
+torch==2.2.*
+torchvision
+easyocr    # optional
