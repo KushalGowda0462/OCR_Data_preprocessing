@@ -8,10 +8,14 @@ uvicorn src.api.endpoints:app --reload --host 127.0.0.1 --port 8000
 
 #To activate conda:
 conda activate doc-prep-clean
+conda activate trocr-only (main, for TrOCR model)
+
+** You can list all discoverable environments with `conda info --envs` **
 
 #To Deactivate:
 conda deactivate
 #=================
+y
 
 
 minIO login:
@@ -29,3 +33,4 @@ python tools/step5_rule_based.py -i samples/
 #Hybrid (combined):
 python tools/step5_hybrid.py -i samples/
 #===========================================
+
